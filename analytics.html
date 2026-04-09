@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedQueue · Analytics Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/analytics.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts for Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js for beautiful charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="app">
+        <!-- Sidebar Navigation (same as index.html) -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-hospital-user"></i>
+                <span>Med<span class="highlight">Queue</span></span>
+            </div>
+            
+             <nav class="nav-menu">
+    <a href="index.html" class="nav-item active">
+        <i class="fas fa-queue"></i>
+        <span>Queue Dashboard</span>
+    </a>
+    <a href="analytics.html" class="nav-item">
+        <i class="fas fa-chart-line"></i>
+        <span>Analytics</span>
+    </a>
+    <a href="public.html" class="nav-item">
+        <i class="fas fa-tv"></i>
+        <span>Public Display</span>
+    </a>
+    <a href="doctor-login.html" class="nav-item">
+        <i class="fas fa-user-md"></i>
+        <span>Doctors</span>
+    </a>
+    <a href="settings.html" class="nav-item">
+        <i class="fas fa-gear"></i>
+        <span>Settings</span>
+    </a>
+</nav>
+            
+            <div class="user-profile">
+                <div class="avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="user-info">
+                    <p class="user-name">Receptionist</p>
+                    <p class="user-role">Admin</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="header">
+                <h1>Analytics Dashboard <span class="badge">Live</span></h1>
+                <div class="date-time">
+                    <i class="far fa-calendar"></i>
+                    <span id="currentDate"></span>
+                    <i class="far fa-clock"></i>
+                    <span id="currentTime"></span>
+                </div>
+            </header>
+
+            <!-- Date Range Selector -->
+            <div class="analytics-date-range">
+                <div class="range-selector">
+                    <button class="range-btn active" data-range="today">Today</button>
+                    <button class="range-btn" data-range="week">This Week</button>
+                    <button class="range-btn" data-range="month">This Month</button>
+                    <button class="range-btn" data-range="custom">Custom</button>
+                </div>
+                <div class="custom-date-range" id="customDateRange" style="display: none;">
+                    <div class="date-input">
+                        <label>From:</label>
+                        <input type="date" id="startDate">
+                    </div>
+                    <div class="date-input">
+                        <label>To:</label>
+                        <input type="date" id="endDate">
+                    </div>
+                    <button class="btn-apply" id="applyDateRange">Apply</button>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="analytics-stats-grid">
+                <div class="analytics-stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-label">Total Patients</span>
+                        <span class="stat-number" id="totalPatients">0</span>
+                        <span class="stat-trend" id="patientTrend">+0%</span>
+                    </div>
+                </div>
+                
+                <div class="analytics-stat-card">
+                    <div class="stat-icon green">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-label">Avg. Wait Time</span>
+                        <span class="stat-number" id="avgWaitTime">0</span>
+                        <span class="stat-trend" id="waitTrend">min</span>
+                    </div>
+                </div>
+                
+                <div class="analytics-stat-card">
+                    <div class="stat-icon purple">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-label">Busiest Doctor</span>
+                        <span class="stat-number" id="busiestDoctor">-</span>
+                        <span class="stat-trend" id="doctorPatients">0 patients</span>
+                    </div>
+                </div>
+                
+                <div class="analytics-stat-card">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-label">Completion Rate</span>
+                        <span class="stat-number" id="completionRate">0%</span>
+                        <span class="stat-trend" id="completionTrend">✓</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Grid -->
+            <div class="charts-grid">
+                <!-- Patient Volume Chart -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3><i class="fas fa-chart-bar"></i> Patient Volume</h3>
+                        <div class="chart-legend" id="volumeLegend"></div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="patientVolumeChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Doctor Workload Chart -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3><i class="fas fa-pie-chart"></i> Doctor Workload</h3>
+                        <div class="chart-legend" id="workloadLegend"></div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="doctorWorkloadChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Hourly Distribution Chart -->
+                <div class="chart-card full-width">
+                    <div class="chart-header">
+                        <h3><i class="fas fa-chart-line"></i> Hourly Distribution</h3>
+                        <div class="chart-legend" id="hourlyLegend"></div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="hourlyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doctor Performance Table -->
+            <div class="analytics-table-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-table"></i> Doctor Performance</h3>
+                    <div class="table-controls">
+                        <button class="export-btn" id="exportData">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="analytics-table">
+                        <thead>
+                            <tr>
+                                <th>Doctor</th>
+                                <th>Patients</th>
+                                <th>Avg Wait</th>
+                                <th>Avg Visit Time</th>
+                                <th>Completion Rate</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="doctorTableBody">
+                            <tr>
+                                <td colspan="6" class="empty-state">
+                                    <i class="fas fa-chart-line fa-3x"></i>
+                                    <p>Loading data...</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="js/firebase.js"></script>
+    <script type="module" src="js/analytics.js"></script>
+</body>
+</html>

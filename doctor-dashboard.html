@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedQueue · Doctor Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/doctor-dashboard.css">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <i class="fas fa-heartbeat"></i>
+            <h1>Med<span>Queue</span></h1>
+        </div>
+        <div class="doctor-info">
+            <div class="date-picker-wrapper">
+                <label><i class="fas fa-calendar-alt"></i> View Date:</label>
+                <input type="date" id="datePicker">
+            </div>
+            <div class="doctor-badge">
+                <i class="fas fa-user-md"></i>
+                <div>
+                    <div class="name" id="doctorName">Dr. Sharma</div>
+                    <div class="dept" id="doctorDept">Cardiology</div>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon blue">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="waitingCount">0</h3>
+                    <p>Waiting Patients</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="withDoctorCount">0</h3>
+                    <p>With Doctor</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon purple">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="completedCount">0</h3>
+                    <p>Completed</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon orange">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalCount">0</h3>
+                    <p>Total Patients</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Patient Section -->
+        <div class="current-patient-card" id="currentPatientCard">
+            <div id="currentPatientContent">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+
+        <!-- Queue Sections (2 columns) -->
+        <div class="queue-sections">
+            <!-- Waiting Queue -->
+            <div class="queue-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-hourglass-half"></i> Waiting Queue <span class="live-indicator"><i class="fas fa-circle"></i> LIVE</span></h2>
+                    <span class="queue-badge" id="queueCount">0 patients</span>
+                </div>
+                <div id="waitingTable">
+                    <!-- Dynamic table -->
+                </div>
+            </div>
+
+            <!-- Completed Patients -->
+            <div class="queue-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-check-circle"></i> Completed Patients</h2>
+                    <span class="queue-badge" id="completedCountBadge">0 patients</span>
+                </div>
+                <div id="completedTable">
+                    <!-- Dynamic table -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/doctor-dashboard.js"></script>
+</body>
+</html>

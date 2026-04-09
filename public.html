@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedQueue · Live Patient Tracking Display</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/public.css">
+</head>
+<body>
+    <!-- Decorative Background Elements -->
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+    <div class="bg-shape shape-3"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Med<span>Queue</span></h1>
+                    <p>Patient Flow Management System</p>
+                </div>
+            </div>
+            
+            <div class="live-badge">
+                <span class="pulse-dot"></span>
+                LIVE
+            </div>
+            
+            <div class="datetime">
+                <div class="date-card">
+                    <i class="far fa-calendar-alt"></i>
+                    <span id="currentDate"></span>
+                </div>
+                <div class="time-card">
+                    <i class="far fa-clock"></i>
+                    <span id="currentTime"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Professional Action Cards Section -->
+        <div class="action-cards">
+            <div class="action-card" onclick="window.location.href='book-appointment.html'">
+                <div class="card-icon book">
+                    <i class="fas fa-calendar-plus"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Book Appointment</h3>
+                    <p>Schedule your visit online</p>
+                </div>
+                <div class="card-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+            
+            <div class="action-card" onclick="window.location.href='doctor-login.html'">
+                <div class="card-icon doctor">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Doctor Portal</h3>
+                    <p>Secure staff access</p>
+                </div>
+                <div class="card-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+            
+            <div class="action-card" onclick="window.location.href='index.html'">
+                <div class="card-icon reception">
+                    <i class="fas fa-desktop"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Reception Desk</h3>
+                    <p>Manage patient queue</p>
+                </div>
+                <div class="card-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Currently Serving Hero Section -->
+        <div class="hero-section">
+            <div class="hero-label">
+                <i class="fas fa-bell"></i>
+                <span>NOW SERVING</span>
+            </div>
+            <div class="serving-grid" id="servingGrid">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+
+        <!-- Queue Status Section -->
+        <div class="queue-status-section">
+            <div class="section-header">
+                <div class="header-left">
+                    <i class="fas fa-chart-simple"></i>
+                    <h2>Queue Status by Department</h2>
+                </div>
+                <div class="header-right">
+                    <span class="update-info">
+                        <i class="fas fa-sync-alt fa-fw"></i> Real-time updates
+                    </span>
+                </div>
+            </div>
+            <div class="doctors-grid" id="doctorsGrid">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-hospital"></i>
+                    <span>MedQueue Healthcare</span>
+                </div>
+                <div class="footer-message">
+                    <i class="fas fa-qrcode"></i>
+                    Scan QR code at reception to track your token on mobile
+                </div>
+                <div class="footer-copyright">
+                    &copy; 2024 MedQueue | Real-time Queue Management System
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/public.js"></script>
+</body>
+</html>

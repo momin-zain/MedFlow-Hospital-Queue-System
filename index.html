@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedQueue · Hospital Queue Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts for Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+    <div class="app">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-hospital-user"></i>
+                <span>Med<span class="highlight">Queue</span></span>
+            </div>
+            
+            <nav class="nav-menu">
+    <a href="index.html" class="nav-item active">
+        <i class="fas fa-queue"></i>
+        <span>Queue Dashboard</span>
+    </a>
+    <a href="analytics.html" class="nav-item">
+        <i class="fas fa-chart-line"></i>
+        <span>Analytics</span>
+    </a>
+    <a href="public.html" class="nav-item">
+        <i class="fas fa-tv"></i>
+        <span>Public Display</span>
+    </a>
+    <a href="doctor-login.html" class="nav-item">
+        <i class="fas fa-user-md"></i>
+        <span>Doctors</span>
+    </a>
+    <a href="settings.html" class="nav-item">
+        <i class="fas fa-gear"></i>
+        <span>Settings</span>
+    </a>
+</nav>
+            </nav>
+            
+            <div class="user-profile">
+                <div class="avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="user-info">
+                    <p class="user-name">Receptionist</p>
+                    <p class="user-role">Admin</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="header">
+                <h1>Queue Management <span class="badge">Live</span></h1>
+                <div class="date-time">
+                    <i class="far fa-calendar"></i>
+                    <span id="currentDate"></span>
+                    <i class="far fa-clock"></i>
+                    <span id="currentTime"></span>
+                </div>
+            </header>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>In Queue</h3>
+                        <p class="stat-value" id="waitingCount">0</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>With Doctor</h3>
+                        <p class="stat-value" id="withDoctorCount">0</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Completed</h3>
+                        <p class="stat-value" id="completedCount">0</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-hourglass-half"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Avg Wait Time</h3>
+                        <p class="stat-value" id="avgWaitTime">0m</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Patient Section -->
+            <div class="add-patient-card">
+                <h2><i class="fas fa-user-plus"></i> Register New Patient</h2>
+                <div class="input-group">
+                    <div class="input-field">
+                        <label for="patientName">
+                            <i class="fas fa-user"></i>
+                            Patient Name
+                        </label>
+                        <input type="text" id="patientName" placeholder="e.g. John Smith">
+                    </div>
+                    
+                    <div class="input-field">
+                        <label for="doctorSelect">
+                            <i class="fas fa-stethoscope"></i>
+                            Select Doctor
+                        </label>
+                        <select id="doctorSelect">
+                            <option value="Dr. Sharma">Dr. Sharma (Cardiology)</option>
+                            <option value="Dr. Khan">Dr. Khan (Neurology)</option>
+                            <option value="Dr. Patel">Dr. Patel (General)</option>
+                        </select>
+                    </div>
+                    
+                    <button id="generateBtn" class="btn-primary">
+                        <i class="fas fa-plus-circle"></i>
+                        Generate Token
+                    </button>
+                    
+                    <button id="testFirebaseBtn" class="btn-secondary">
+                        <i class="fas fa-plug"></i>
+                        Test Connection
+                    </button>
+                </div>
+            </div>
+
+            <!-- Queue Section with Integrated Date Filter -->
+            <div class="queue-section">
+                <div class="section-header">
+                    <div class="header-left">
+                        <h2><i class="fas fa-list-ol"></i> Active Queue</h2>
+                        <!-- Date Filter Buttons Inside Header -->
+                        <div class="date-filter-buttons">
+                            <button class="date-filter-btn active" id="todayBtn">
+                                <i class="fas fa-calendar-day"></i>
+                                Today
+                            </button>
+                            <button class="date-filter-btn" id="yesterdayBtn">
+                                <i class="fas fa-chevron-left"></i>
+                                Yesterday
+                            </button>
+                            
+                            <!-- Custom Date Picker -->
+                            <div class="custom-date-picker">
+                                <button class="date-filter-btn" id="pickDateBtn">
+                                    <i class="fas fa-calendar-week"></i>
+                                    <span id="selectedDateText">Pick Date</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                
+                                <!-- Calendar Dropdown -->
+                                <div class="calendar-dropdown" id="calendarDropdown">
+                                    <div class="calendar-header">
+                                        <button class="calendar-nav" id="prevMonth">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </button>
+                                        <span id="monthYearDisplay">March 2026</span>
+                                        <button class="calendar-nav" id="nextMonth">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                    <div class="calendar-weekdays">
+                                        <span>Mo</span><span>Tu</span><span>We</span>
+                                        <span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+                                    </div>
+                                    <div class="calendar-days" id="calendarDays">
+                                        <!-- Days will be generated by JS -->
+                                    </div>
+                                    <div class="calendar-footer">
+                                        <button class="btn-today-small" id="goToToday">Today</button>
+                                        <button class="btn-cancel" id="closeCalendar">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-controls">
+                        <span class="refresh-badge">
+                            <i class="fas fa-sync-alt"></i> Live
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Search Bar (Below Header) -->
+                <div class="search-container">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchPatient" placeholder="Search by patient name or token number...">
+                        <button id="clearSearch" class="clear-btn" style="display: none;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Token</th>
+                                <th>Patient</th>
+                                <th>Doctor</th>
+                                <th>Status</th>
+                                <th>Time</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tokenTable">
+                            <tr>
+                                <td colspan="6" class="empty-state">
+                                    <i class="fas fa-queue fa-3x"></i>
+                                    <p>No patients in queue</p>
+                                    <span>Add a patient to get started</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="js/firebase.js"></script>
+    <script type="module" src="js/script.js"></script>
+</body>
+</html>
